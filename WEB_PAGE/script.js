@@ -85,26 +85,34 @@ async function renderRooms() {
         cardHolder.appendChild(card)
     });
 }
-
+//en vez de cambiar toda la data creo que es mejor solo crear un json de la room que se va a reservar y enviar eso
 function reserveRoom(room, time) {
     let inputName = document.getElementById('inputName').value
     let inputLast = document.getElementById('inputLast').value
     let inputId = document.getElementById('inputId').value
     alert(`${inputName} ${inputLast}, ${inputId}, ${room}, Slot ${time}`)
+
+    let newRoom = null
     for (let i = 0; i < data.studyRooms.length; i++) {
         if (data.studyRooms[i].name == room) {
-            data.studyRooms[i].reservations[time].name = `${inputName} ${inputLast}`
-            data.studyRooms[i].reservations[time].id = inputId
+            console.log("pog",data.studyRooms[i])
+            newRoom = data.studyRooms[i]
+            newRoom.reservations[time].name = `${inputName} ${inputLast}`
+            newRoom.reservations[time].id = inputId
         }
     }
-    console.log(data)
-    putNewItem(data)
+
+    console.log("newRoom", newRoom)
+    apiUrl = `${apiUrlForPut}${room}`
+    console.log(apiUrl)
+    //almost done, check newRoom json and get ready to put
+    //putNewItem(data) //DESCOMENTAR
 }
 
-async function putNewItem(data) {
+async function putNewItem(data, apiUrl) {
     try {
         // Request for posting on server
-        const response = await fetch(apiUrlForPut, {
+        const response = await fetch(apiUrl, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
