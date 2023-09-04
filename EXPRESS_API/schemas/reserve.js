@@ -10,10 +10,10 @@ const reservationSchema = z.object({
         invalid_type_error: 'Reservation id must be a String',
         required_error: 'Reservation id is required'
     }),
-    time: z.int({
+    time: z.number({
         invalid_type_error: 'Reservation time must be a Number',
         required_error: 'Reservation time is required'
-    }).min(7).max(18),
+    }).int().min(7).max(18),
 })
 
 function validateReservation(obj) {

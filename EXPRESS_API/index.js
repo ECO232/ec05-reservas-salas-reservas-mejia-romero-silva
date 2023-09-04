@@ -6,12 +6,12 @@ const port = 3000
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const cors = require('cors'); 
+const cors = require('cors');
 app.use(cors())
 
-
-
-const {validateUser} = require('./schemas/users')
+const {validateUser} = require('./schemas/user')
+const {validateStudyRoom} = require('./schemas/studyRoom')
+const {validateReservation} = require('./schemas/reserve')
 
 // Esto no es REST pero mientras tantillo
 let users = []
@@ -22,6 +22,18 @@ users.push({
     id: "1130613425",
     email: "pperez@u.icesi.edu.co"
 })
+
+//////////////////////////////////////////////////////////////////////////
+
+app.listen(port, () => {
+    console.log(`Trees speaking Vietnamese on port ${port}`)
+})
+
+app.get('/', (req, res)=>{
+    res.send("API IS RUNNING")
+})
+
+//////////////////////////////////////////////////////////////////////////
 
 app.get('/users/:id', (req, res)=>{
     console.log("params:", req.params)
@@ -48,8 +60,7 @@ app.get('/users', (req, res)=>{
 })
 
 app.post('/users', (req, res) => {
-
-    const userValidationResult = validateUser(req.body)    
+    const userValidationResult = validateUser(req.body)
     console.log("result", userValidationResult.error)
 
     if(userValidationResult.error){
@@ -61,17 +72,13 @@ app.post('/users', (req, res) => {
     let newUser = {
         name:userValidationResult.data.name,
         last:userValidationResult.data.last,
-        age:userValidationResult.data.age,
         id:userValidationResult.data.id,
-        email:userValidationResult.data.email
     }
-    users.push(newUser)    
+    users.push(newUser)
     res.status(201).send({"message":"Creación Exitosa!", "user":newUser})
 })
 
-app.get('/', (req, res)=>{
-    res.send("Bienvenidos a la API de usuarios")
-})
+
 
 app.delete('/users/:id', (req, res)=>{
     const idToDelete = req.params.id;
@@ -123,6 +130,6 @@ app.use("", (req, res)=>{
     res.status(404).send("No encontramos el recurso solicitado")
 })
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
