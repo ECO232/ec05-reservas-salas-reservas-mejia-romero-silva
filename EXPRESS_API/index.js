@@ -11,17 +11,31 @@ app.use(cors())
 
 const {validateUser} = require('./schemas/user')
 const {validateStudyRoom} = require('./schemas/studyRoom')
-const {validateReservation} = require('./schemas/reserve')
+const {validateReservation} = require('./schemas/reserve');
+const { object } = require('zod');
 
 // Esto no es REST pero mientras tantillo
 let users = []
-users.push({
-    name: "Pepito",
-    last: "Perez",
-    age: 26,
-    id: "1130613425",
-    email: "pperez@u.icesi.edu.co"
-})
+let reserves = []
+let studyRooms = []
+
+for (let i = 7; i < 19; i++) {
+    let newReserve = {
+        name: null,
+        id: null,
+        time: i
+    }
+    reserves.push(newReserve)
+}
+
+for (let i = 1; i < 7; i++) {
+    let newStudyRoom = {
+        name: `Room ${i}`,
+        building: "Main Building",
+        reservations: reserves
+    }
+    studyRooms.push(newStudyRoom)
+}
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -35,27 +49,7 @@ app.get('/', (req, res)=>{
 
 //////////////////////////////////////////////////////////////////////////
 
-app.get('/users/:id', (req, res)=>{
-    console.log("params:", req.params)
-    const requestID = req.params.id
-    let requiredUser = null;
-    for (let index = 0; index < users.length; index++) {
-        console.log(users[index].id === requestID, users[index].id, requestID)
-        if(users[index].id === requestID){
-            requiredUser = users[index];
-        }
-    }
-    console.log(requiredUser)
-    res.json(requiredUser)
-})
-
-
 app.get('/users', (req, res)=>{
-    if(req.query.age){
-        users = users.filter(
-            (user)=>{return user.age == req.query.age}
-        )
-    }
     res.send({"users":users})
 })
 
@@ -75,61 +69,25 @@ app.post('/users', (req, res) => {
         id:userValidationResult.data.id,
     }
     users.push(newUser)
-    res.status(201).send({"message":"Creación Exitosa!", "user":newUser})
+    res.status(201).send({"message":"New GI in the jungle!", "user":newUser})
 })
-
-
 
 app.delete('/users/:id', (req, res)=>{
     const idToDelete = req.params.id;
     let indexToDelete = users.findIndex(user=>user.id==idToDelete)
     let userDeleted = users.splice(indexToDelete, 1)
     //console.log("user delete: ", userDeleted)
-    res.send("Se eliminó correctamente el usuario con id: " + userDeleted[0].id)
-})
-
-app.put('/users/:id',(req, res)=>{
-    let index = users.findIndex(user => user.id == req.params.id)
-    let newUser = {
-        name:req.body.name,
-        last:req.body.last,
-        age:req.body.age,
-        id:req.body.id,
-        email:req.body.email
-    }
-    users[index]=newUser
-    res.send("usuario reemplazado " + newUser )
-})
-
-app.patch('/users/:id', (req, res)=>{
-    let index = users.findIndex(user => user.id == req.params.id)
-
-    /* A pie 🦶*/
-    //users[index].name = req.body.name || users[index].name
-    //users[index].last = req.body.last || users[index].last
-    //users[index].age = req.body.age || users[index].age
-    //users[index].email = req.body.email || users[index].email
-
-    /* Para generalizarlo ⭐*/
-    if (index !== -1) {
-        // Obtén las claves del cuerpo de la solicitud
-        const requestKeys = Object.keys(req.body);
-        // Itera sobre las claves y verifica si existen en el objeto
-        requestKeys.forEach(key => {
-            if (users[index][key] !== undefined) {
-                users[index][key] = req.body[key];
-            }
-        });
-        res.send("Usuario modificado para las claves: " + requestKeys.join(', '));
-    } else {
-        res.status(404).send("Usuario no encontrado");
-    }
-});
-
-app.use("", (req, res)=>{
-    res.status(404).send("No encontramos el recurso solicitado")
+    res.send("GI Lost! id: " + userDeleted[0].id)
 })
 
 //////////////////////////////////////////////////////////////////////////
 
+app.get('/studyRooms', (req, res)=>{
+    res.send({"study rooms":studyRooms})
+})
+
 //////////////////////////////////////////////////////////////////////////
+
+app.get('/reservations', (req, res)=>{
+    res.send({"reservations":reserves})
+})

@@ -13,7 +13,7 @@ const userSchema = z.object({
     id: z.number({
         invalid_type_error: 'User id must be a Number',
         required_error: 'User id is required'
-    }).int().min(10).max(10),
+    }).int().min(10),
 })
 
 function validateUser(obj) {
