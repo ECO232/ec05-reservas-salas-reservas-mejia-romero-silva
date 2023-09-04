@@ -83,9 +83,19 @@ app.delete('/users/:id', (req, res)=>{
 //////////////////////////////////////////////////////////////////////////
 
 app.get('/studyRooms', (req, res)=>{
-    res.send({"study rooms":studyRooms})
+    res.send({"studyRooms":studyRooms})
 })
 
+app.put('/studyRooms/:name',(req, res)=>{
+    let index = studyRooms.findIndex(room => room.name == req.params.name)
+    let newStudyRoom = {
+        name:req.body.name,
+        building:req.body.building,
+        reservations:req.body.reservations
+    }
+    studyRooms[index]=newStudyRoom
+    res.send("Study Room Updated" + newStudyRoom )
+})
 //////////////////////////////////////////////////////////////////////////
 
 app.get('/reservations', (req, res)=>{

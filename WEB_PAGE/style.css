@@ -1,46 +1,22 @@
-body{
+#inputHolder{
+    margin-bottom: 2%;
+}
+
+.cardStyle{
+    background-color: blueviolet;
+    width: 50%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    margin-bottom: 10%;
 }
 
-#sala_display{
-    background-color: rgb(59, 255, 190);
-    width: 80%;
-    padding: 10px;
-    padding-top: 0;
-    font-family: fantasy;
-    color: white;
+.reservationListStyle{
+    background-color: brown;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
+    flex-direction: column;
+    margin-bottom: 2%;
 }
 
-#tit-ulo{
-    display: flex;
-    justify-content: center;
-}
-
-#context_bar{
-    background-color: turquoise;
-    width: 80%;
-    padding: 10px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
-    height: 40px;
-}
-
-.button{
-    border: 0;
-    border-radius: 20px;
-
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-
-    padding-top: 6px;
-    padding-bottom: 6px;
-    padding-left: 15px;
-    padding-right: 15px;
+.reservedRoom{
+    background-color: chartreuse;
 }
