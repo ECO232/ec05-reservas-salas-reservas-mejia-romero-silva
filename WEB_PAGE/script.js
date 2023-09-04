@@ -16,8 +16,10 @@ async function fetchItems() {
         return;
     }
 }
+
+let data = null
 async function renderRooms() {
-    let data = await fetchItems()
+    data = await fetchItems()
     console.log(data)
 
     let cardHolder = document.getElementById('cardHolder')
@@ -66,7 +68,7 @@ async function renderRooms() {
             resButton.name = e.name
             resButton.innerText = "Reserve"
             resButton.addEventListener('click', function(event) {
-                console.log("here cyka",this.name, this.id)
+                //console.log("here cyka",this.name, this.id)
                 reserveRoom(this.name, this.id)
             })
 
@@ -88,7 +90,15 @@ function reserveRoom(room, time) {
     let inputName = document.getElementById('inputName').value
     let inputLast = document.getElementById('inputLast').value
     let inputId = document.getElementById('inputId').value
-    alert(`${inputName} ${inputLast}, ${inputId}, ${room}, Time ${time}`)
+    alert(`${inputName} ${inputLast}, ${inputId}, ${room}, Slot ${time}`)
+    for (let i = 0; i < data.studyRooms.length; i++) {
+        if (data.studyRooms[i].name == room) {
+            data.studyRooms[i].reservations[time].name = `${inputName} ${inputLast}`
+            data.studyRooms[i].reservations[time].id = inputId
+        }
+    }
+    console.log(data)
+    putNewItem(data)
 }
 
 async function putNewItem(data) {
