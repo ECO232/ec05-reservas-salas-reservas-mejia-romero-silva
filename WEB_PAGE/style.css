@@ -1,3 +1,46 @@
-div{
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#sala_display{
+    background-color: rgb(59, 255, 190);
+    width: 80%;
     padding: 10px;
+    padding-top: 0;
+    font-family: fantasy;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#tit-ulo{
+    display: flex;
+    justify-content: center;
+}
+
+#context_bar{
+    background-color: turquoise;
+    width: 80%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    height: 40px;
+}
+
+.button{
+    border: 0;
+    border-radius: 20px;
+
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
