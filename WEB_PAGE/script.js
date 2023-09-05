@@ -23,6 +23,7 @@ async function renderRooms() {
     console.log(data)
 
     let cardHolder = document.getElementById('cardHolder')
+    cardHolder.innerHTML = null
     data.studyRooms.forEach(e => {
         console.log(e)
         //Card created
@@ -90,7 +91,12 @@ function reserveRoom(room, time) {
     let inputName = document.getElementById('inputName').value
     let inputLast = document.getElementById('inputLast').value
     let inputId = document.getElementById('inputId').value
-    alert(`${inputName} ${inputLast}, ${inputId}, ${room}, Slot ${time}`)
+    if (inputName == "" || inputLast == "" || inputId == "") {
+        alert("At least one of the inputs is empty")
+        return
+    }
+    let hour = parseInt(time) + 7
+    alert(`${inputName} ${inputLast}, ${inputId}, ${room}, From ${hour} hrs to ${hour+1} hrs`)
 
     let newRoom = null
     for (let i = 0; i < data.studyRooms.length; i++) {
@@ -102,15 +108,13 @@ function reserveRoom(room, time) {
         }
     }
 
-    console.log("newRoom", newRoom)
     apiUrl = `${apiUrlForPut}${room}`
-    console.log(apiUrl)
     //almost done, check newRoom json and get ready to put
     putNewItem(newRoom,apiUrl) //DESCOMENTAR //APENAS FUNCIONAL, SACA ERROR "script.js:132 Error posting item: SyntaxError: Unexpected token 'S', "Study Room"... is not valid JSON" Y TOCA HACER REFRESH PARA VER CAMBIOS
     //Te voy a sacar la cresta si no me contas de estos avances tan grandes, Eduardo, like Damn...
 }
 
-async function putNewItem(data, apiUrl) {
+async function putNewItem(apiData, apiUrl) {
     try {
         // Request for posting on server
         const response = await fetch(apiUrl, {
@@ -118,7 +122,7 @@ async function putNewItem(data, apiUrl) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(apiData)
         });
 
         if (!response.ok) {
@@ -126,11 +130,12 @@ async function putNewItem(data, apiUrl) {
         }
 
         const responseData = await response.json();
-
+        renderRooms()
         return responseData;
 
     } catch (error) {
         console.error('Error posting item:', error);
+        renderRooms()
         return null;
     }
 }
