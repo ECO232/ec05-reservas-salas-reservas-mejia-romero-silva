@@ -2,21 +2,34 @@
     margin-bottom: 2%;
 }
 
+button{
+    border-radius: 20px;
+    border: 0;
+    width: 25%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
 .cardStyle{
-    background-color: blueviolet;
+    background-color: rgb(90, 160, 119);
     width: 50%;
     display: flex;
     flex-direction: column;
     margin-bottom: 10%;
+    border-radius: 10px;
+    padding: 10px;
 }
 
 .reservationListStyle{
-    background-color: brown;
+    background-color: rgb(51, 174, 255);
     display: flex;
     flex-direction: column;
     margin-bottom: 2%;
+    border-radius: 10px;
+    padding: 10px;
 }
 
 .reservedRoom{
     background-color: chartreuse;
+    border-radius: 10px;
 }
