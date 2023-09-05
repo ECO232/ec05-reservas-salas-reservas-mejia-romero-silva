@@ -107,6 +107,7 @@ function reserveRoom(room, time) {
     console.log(apiUrl)
     //almost done, check newRoom json and get ready to put
     putNewItem(newRoom,apiUrl) //DESCOMENTAR //APENAS FUNCIONAL, SACA ERROR "script.js:132 Error posting item: SyntaxError: Unexpected token 'S', "Study Room"... is not valid JSON" Y TOCA HACER REFRESH PARA VER CAMBIOS
+    //Te voy a sacar la cresta si no me contas de estos avances tan grandes, Eduardo, like Damn...
 }
 
 async function putNewItem(data, apiUrl) {
